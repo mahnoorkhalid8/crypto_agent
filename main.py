@@ -109,40 +109,14 @@ config = RunConfig(
     tracing_disabled=True
 )
 
-# @function_tool
-# async def get_crypto_price(user_query:str) -> str:
-#     """
-#     Extract crypto name from user query and fetch its price.
-#     Example: "What is the price of Bitcoin?" -> Extract "Bitcoin
-#     """
-#     query = user_query.lower()
-    
-#     url= "https://api.coinlore.net/api/ticker/"
-#     response = requests.get(url)
-    
-#     if response.status_code != 200:
-#         return f"Error fetching data: {response.status_code}"
-#     data = response.json().get("data", [])
-    
-#     for coin in data:    
-#         if coin["name"].lower() in query or coin["symbol"].lower() in query:
-#             name = coin['name']
-#             price_usd = coin['price_usd']
-#             return f"The current price of {name} is ${price_usd} USD."
-    
-#     return "Sorry, I couldn't find any cryptocurrency in your question. Try using the coin name or symbol (e.g., Bitcoin, BTC)."
-
 @function_tool
 async def get_crypto_price(user_query: str) -> str:
     """
     Extract crypto name from user query and fetch its price.
     Example: "What is the price of Bitcoin?" -> Extract "Bitcoin"
     """
-
-    # Convert query to lowercase
     query = user_query.lower()
 
-    # Fetch all available coins
     url = "https://api.coinlore.net/api/tickers/"
     response = requests.get(url)
 
@@ -151,7 +125,6 @@ async def get_crypto_price(user_query: str) -> str:
 
     data = response.json().get("data", [])
 
-    # Look for a match in coin name or symbol
     for coin in data:
         if coin["name"].lower() in query or coin["symbol"].lower() in query:
             name = coin["name"]
